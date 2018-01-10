@@ -5,12 +5,4 @@ const apiRouter = require('../routes/api')
 
 app.use('/api', apiRouter);
 
-
-
-// app.get('/', function (req, res) {
-//   res.send('Hello World from port 3000')
-// })
-
-// app.listen(3000)
-
 module.exports = app;
