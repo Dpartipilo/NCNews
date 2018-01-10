@@ -1,0 +1,26 @@
+{
+  "name": "ncnews",
+  "version": "1.0.0",
+  "description": "reddit clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./spec",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dpartipilo/NCNews.git"
+  },
+  "author": "Diego Partipilo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dpartipilo/NCNews/issues"
+  },
+  "homepage": "https://github.com/Dpartipilo/NCNews#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.9",
+    "nodemon": "^1.14.9"
+  }
+}
