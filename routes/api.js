@@ -10,10 +10,11 @@ router.get('/', (req, res) => {
   res.send('Hello World ')
 })
 
+// ## ROUTES
+
 router.use('/articles', articlesRouter);
 router.use('/comments', commentsRouter);
 router.use('/topics', topicsRouter);
 router.use('/users', usersRouter);
-
 
 module.exports = router;

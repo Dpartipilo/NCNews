@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 // GET /api/articles
 // Returns all the articles
 
-
 // GET /api/articles/:article_id/comments
 // Get all the comments for a individual article
 
