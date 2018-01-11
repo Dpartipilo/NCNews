@@ -2,12 +2,15 @@ if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 //## Server
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 //##Database
 const config = require('../config');
 const db = config.DB[process.env.NODE_ENV] || process.env.DB;
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
+
+app.use(bodyParser.json());
 
 //##API-Route
 const apiRouter = require('../routes/api')
