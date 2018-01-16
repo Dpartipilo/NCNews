@@ -17,6 +17,22 @@ describe('API', () => {
       }).catch(err => console.log({ 'error': + err }));
   });
 
+  /**************** TOPICS ***************/
+
+  //Get all topics
+  describe('GET /topics', () => {
+    it('Returns all TOPICS with a status code of 200', () => {
+      return request
+        .get('/api/topics')
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.be.equal(3);
+          expect(res.body[0].title).to.be.a('string');
+        });
+    });
+  });
+
   /*************** ARTICLES **************/
 
   // Get all articles

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-const { ArticleSchema, TopicSchema, CommentSchema, UserSchema } = require('../models/models.js');
+const { ArticleSchema, CommentSchema } = require('../models/models.js');
 
 function getAllArticles(req, res, next) {
   ArticleSchema.find()
@@ -26,8 +26,5 @@ function getAllCommentsByArticle(req, res, next) {
       next(err);
     });
 }
-
-
-
 
 module.exports = { getAllArticles, getAllCommentsByArticle };

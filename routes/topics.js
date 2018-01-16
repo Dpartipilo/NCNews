@@ -1,12 +1,10 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello from topics');
-});
-
+const { getAllTopics } = require('../controllers/topicsController');
 
 // GET /api/topics
 // Get all the topics
+router.get('/', getAllTopics);
 
 // GET /api/topics/:topic_id/articles
 // Return all the articles for a certain topic
