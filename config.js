@@ -1,6 +1,6 @@
 module.exports = {
   DB:{
-    test: 'mongodb://localhost/NCnews',
+    test: 'mongodb://localhost/NCnews_test',
     dev: 'mongodb://localhost/NCnews'
   },
   PORT: {
