@@ -21,4 +21,19 @@ mongoose.connect(db, {useMongoClient: true})
 
 app.use('/api', apiRouter);
 
+
+
+app.use((err, req, res, next) => {
+  if(err.type === 400) res.status(400).send(err, {msg: 'invalid id'});
+  else(next(err));
+});
+
+app.use((err, req, res, next) => {
+  if(err.type === 404) res.status(404).send(err, {msg: 'page not found'});
+  else(next(err));
+})
+
+app.use((err, req, res, next) => res.status(500).send({err}))
+
+
 module.exports = app;
