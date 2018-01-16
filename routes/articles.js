@@ -1,12 +1,10 @@
 const router = require('express').Router();
-
-router.get('/', (req, res) => {
-  res.send('Hello from articles');
-});
-
+const { getAllArticles } = require('../controllers/articlesControler');
 
 // GET /api/articles
 // Returns all the articles
+router.get('/', getAllArticles);
+
 
 // GET /api/articles/:article_id/comments
 // Get all the comments for a individual article
