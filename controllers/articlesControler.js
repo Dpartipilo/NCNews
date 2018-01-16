@@ -20,6 +20,7 @@ function getAllCommentsByArticle(req, res, next) {
     .then(() => {
       return CommentSchema.find();
     }).then(comments => {
+      if (comments.length === 0) return next({ type: 404 });
       res.send(comments);
     })
     .catch(err => {
@@ -27,4 +28,23 @@ function getAllCommentsByArticle(req, res, next) {
     });
 }
 
-module.exports = { getAllArticles, getAllCommentsByArticle };
+function addCommentsToArticle(req, res, next) {
+  let article_id = req.params.article_id;
+  ArticleSchema.findById(article_id)
+    .then((article) => {
+      return new CommentSchema({
+        created_by: req.body.created_by,
+        body: req.body.body,
+        from_topic: req.params.article_id
+      });
+    })
+    .then((comment) => {
+      comment.save();
+      res.status(201).send(comment);
+    })
+    .catch(err => {
+      next(err);
+    });
+}
+
+module.exports = { getAllArticles, getAllCommentsByArticle, addCommentsToArticle };

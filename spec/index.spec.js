@@ -80,8 +80,25 @@ describe('API', () => {
     });
   });
 
+  //// POST add a commment to an article
+  describe.only('POST /api/articles/:article_id/comments', () => {
+    it('Responds with the new added COMMENT to an ARTICLE with a status code of 201', () => {
+      return request
+        .post(`/api/articles/${usefulData.articles[0]._id}/comments`)
+        .send({
+          from_topic: `${usefulData.articles[0]._id}`,
+          body: 'test comment!',
+          created_by: 'northcoder'
+        })
+        .expect(201)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+        });
+    });
+  });
+
   /**************** USERS ****************/
-  
+
   //GET all users
   describe('GET /api/users', () => {
     it('Returns all users with a status code of 200', () => {
