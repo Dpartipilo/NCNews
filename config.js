@@ -7,4 +7,4 @@ module.exports = {
     test: 3090,
     dev: 3050
   }
-}
+};
