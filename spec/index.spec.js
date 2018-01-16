@@ -30,7 +30,22 @@ describe('API', () => {
           expect(res.body.length).to.equal(2);
           expect(res.body[0].title).to.be.a('string');
         });
-
     });
   });
+
+  //All comments from an article
+  describe('GET /api/articles/:article_id/comments', () => {
+    it('Returns all COMMENTS from an ARTICLE with a status code of 200', () => {
+      return request
+        .get(`/api/articles/${usefulData.articles[0]._id}/comments`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(2);
+          expect(res.body[0].body).to.be.a('string');
+        }).then(() => mongoose.disconnect());
+    });
+  });
+
 });
+
