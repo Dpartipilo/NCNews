@@ -1,10 +1,8 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello from users');
-});
-
+const { getAllUsers } = require('../controllers/userController');
 // GET /api/users/:username
 // Returns a JSON object with the profile data for the specified user.
+router.get('/', getAllUsers);
 
 module.exports = router;

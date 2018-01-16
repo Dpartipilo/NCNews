@@ -52,7 +52,7 @@ describe('API', () => {
 
   /*************** ARTICLES **************/
 
-  // Get all articles
+  //Get all articles
   describe('GET /articles', () => {
     it('Returns all ARTICLES with a status code of 200', () => {
       return request
@@ -66,7 +66,7 @@ describe('API', () => {
     });
   });
 
-  //All comments from an article
+  //Get all comments from an article
   describe('GET /api/articles/:article_id/comments', () => {
     it('Returns all COMMENTS from an ARTICLE with a status code of 200', () => {
       return request
@@ -76,6 +76,22 @@ describe('API', () => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(2);
           expect(res.body[0].body).to.be.a('string');
+        });
+    });
+  });
+
+  /**************** USERS ****************/
+  
+  //GET all users
+  describe('GET /api/users', () => {
+    it('Returns all users with a status code of 200', () => {
+      return request
+        .get('/api/users')
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(1);
+          expect(res.body[0].username).to.be.a('string');
         });
     });
   });
