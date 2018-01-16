@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-const { TopicSchema, CommentSchema } = require('../models/models.js');
+const { TopicSchema, ArticleSchema } = require('../models/models.js');
 
 
 function getAllTopics(req, res, next) {
@@ -14,4 +14,18 @@ function getAllTopics(req, res, next) {
     });
 }
 
-module.exports = { getAllTopics };
+function getAllArticlesByTopic(req, res, next) {
+  let topic_id = req.params.topic_id;
+  TopicSchema.findById(topic_id)
+    .then(() => {
+      return ArticleSchema.find()
+        .then(articles => {
+          res.send(articles);
+        })
+        .catch(err => {
+          next(err);
+        });
+    });
+}
+
+module.exports = { getAllTopics, getAllArticlesByTopic };

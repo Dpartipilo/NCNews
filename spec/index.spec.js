@@ -16,6 +16,9 @@ describe('API', () => {
         // console.log(usefulData)
       }).catch(err => console.log({ 'error': + err }));
   });
+  after(() => {
+    mongoose.disconnect();
+  });
 
   /**************** TOPICS ***************/
 
@@ -28,6 +31,20 @@ describe('API', () => {
         .then(res => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.be.equal(3);
+          expect(res.body[0].title).to.be.a('string');
+        });
+    });
+  });
+
+  //Get all articles by topic
+  describe('GET /api/topics/:topic_id/articles', () => {
+    it('Returns all ARTICLES from a TOPIC with a status code of 200', () => {
+      return request
+        .get(`/api/topics/${usefulData.topics[0]._id}/articles`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.equal(2);
           expect(res.body[0].title).to.be.a('string');
         });
     });
@@ -59,7 +76,7 @@ describe('API', () => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(2);
           expect(res.body[0].body).to.be.a('string');
-        }).then(() => mongoose.disconnect());
+        });
     });
   });
 
