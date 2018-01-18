@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getAllArticles, getAllCommentsByArticle, addCommentsToArticle } = require('../controllers/articlesControler');
+const { getAllArticles, getAllCommentsByArticle, addCommentsToArticle, articleVote } = require('../controllers/articlesControler');
 
 // GET /api/articles
 // Returns all the articles
@@ -19,6 +19,6 @@ router.route('/:article_id/comments')
 // PUT /api/articles/:article_id
 // Increment or Decrement the votes of an article by one. This route requires a vote query of 'up' or 'down'
 // e.g: /api/articles/:article_id?vote=up
-
+router.put('/:article_id', articleVote);
 
 module.exports = router;

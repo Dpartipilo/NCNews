@@ -80,7 +80,7 @@ describe('API', () => {
     });
   });
 
-  //// POST add a commment to an article
+  // POST add a commment to an article
   describe('POST /api/articles/:article_id/comments', () => {
     it('Responds with the new added COMMENT to an ARTICLE with a status code of 201', () => {
       return request
@@ -95,6 +95,20 @@ describe('API', () => {
           expect(res.body).to.be.an('object');
           expect(res.body.body).to.equal('test comment!');
           expect(res.body.body).to.be.a('string');
+        });
+    });
+  });
+
+  //PUT increment the votes of an article by 1
+  describe('PUT /api/articles/:article_id?vote=up', () => {
+    it('Responds with ARTICLE votes +1 with a status code of 202', () => {
+      return request
+        .put(`/api/articles/${usefulData.articles[0]._id}?vote=up`)
+        .expect(202)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.article.votes).to.equal(1);
+          expect(res.body.article.votes).to.be.a('number');
         });
     });
   });

@@ -31,7 +31,7 @@ function getAllCommentsByArticle(req, res, next) {
 function addCommentsToArticle(req, res, next) {
   let article_id = req.params.article_id;
   ArticleSchema.findById(article_id)
-    .then((article) => {
+    .then(() => {
       return new CommentSchema({
         created_by: req.body.created_by,
         body: req.body.body,
@@ -47,4 +47,20 @@ function addCommentsToArticle(req, res, next) {
     });
 }
 
-module.exports = { getAllArticles, getAllCommentsByArticle, addCommentsToArticle };
+function articleVote(req, res, next) {
+  let article_id = req.params.article_id;
+  let vote = 0;
+  if (req.query.vote.toLowerCase() === 'up') vote += 1;
+  else if (req.query.vote.toLowerCase() === 'down') vote -= 1;
+
+  ArticleSchema.findByIdAndUpdate(article_id, { $inc: { votes: vote } }, { new: true })
+    .then(article => {
+      res.status(202).send({ message: 'Article voted!', article });
+    })
+    .catch(err => {
+      if (err.name === 'CastError') return next({ error: err });
+      else next(err);
+    });
+}
+
+module.exports = { getAllArticles, getAllCommentsByArticle, addCommentsToArticle, articleVote };
