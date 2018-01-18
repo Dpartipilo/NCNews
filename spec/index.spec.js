@@ -126,7 +126,7 @@ describe('API', () => {
         });
     });
   });
-  
+
   /**************** USERS ****************/
 
   //GET all users
@@ -139,6 +139,22 @@ describe('API', () => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(1);
           expect(res.body[0].username).to.be.a('string');
+        });
+    });
+  });
+
+  /**************** COMMENTS ****************/
+
+  // PUT increment votes by 1
+  describe('PUT /api/comments/:comment_id', () => {
+    it('Responds with COMMENT votes +1  with a status code of 202', () => {
+      return request
+        .put(`/api/comments/${usefulData.comments[0]._id}?vote=up`)
+        .expect(202)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.comment.votes).to.equal(1);
+          expect(res.body.comment.votes).to.be.a('number');
         });
     });
   });
