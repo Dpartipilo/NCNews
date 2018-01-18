@@ -113,6 +113,20 @@ describe('API', () => {
     });
   });
 
+  //PUT decrement the votes of an article by 1
+  describe('PUT /api/articles/:article_id?vote=down', () => {
+    it('Responds with ARTICLE votes -1  with a status code of 202', () => {
+      return request
+        .put(`/api/articles/${usefulData.articles[0]._id}?vote=down`)
+        .expect(202)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.article.votes).to.equal(-1);
+          expect(res.body.article.votes).to.be.a('number');
+        });
+    });
+  });
+  
   /**************** USERS ****************/
 
   //GET all users
@@ -128,6 +142,5 @@ describe('API', () => {
         });
     });
   });
-
 });
 
