@@ -172,5 +172,18 @@ describe('API', () => {
         });
     });
   });
+
+  //DELETE deletes a comment
+  describe('DELETE /api/comments/:comment_id', () => {
+    it('Deletes a COMMENT and responds with a status code of 202', () => {
+      return request
+        .delete(`/api/comments/${usefulData.comments[0]._id}`)
+        .expect(202)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.message).to.be.a('string');
+        });
+    });
+  });
 });
 

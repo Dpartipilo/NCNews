@@ -18,4 +18,18 @@ function commentVote(req, res, next) {
     });
 }
 
-module.exports = { commentVote };
+function commentDelete(req, res, next) {
+  let comment_id = req.params.comment_id;
+  CommentSchema.findByIdAndRemove(comment_id)
+    .then(() => {
+      let response = {
+        message: `Comment ${comment_id} successfully deleted`
+      };
+      res.status(202).send(response);
+    })
+    .catch(err => {
+      next(err);
+    });
+}
+
+module.exports = { commentVote, commentDelete};
