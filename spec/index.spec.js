@@ -14,7 +14,7 @@ describe('API', () => {
       .then((data) => {
         usefulData = data;
         // console.log(usefulData);
-      }).catch(err => console.log({ 'error': + err }));
+      }).catch(err => console.log({ 'error': + err }));// eslint-disable-line no-console
   });
   after(() => {
     mongoose.disconnect();

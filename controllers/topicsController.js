@@ -3,7 +3,6 @@ mongoose.Promise = Promise;
 
 const { TopicSchema, ArticleSchema } = require('../models/models.js');
 
-
 function getAllTopics(req, res, next) {
   TopicSchema.find({})
     .then(topics => {

@@ -5,7 +5,6 @@ const { getAllArticles, getAllCommentsByArticle, addCommentsToArticle, articleVo
 // Returns all the articles
 router.get('/', getAllArticles);
 
-
 router.route('/:article_id/comments')
 // GET /api/articles/:article_id/comments
 // Get all the comments for a individual article

@@ -32,4 +32,4 @@ function commentDelete(req, res, next) {
     });
 }
 
-module.exports = { commentVote, commentDelete};
+module.exports = { commentVote, commentDelete };

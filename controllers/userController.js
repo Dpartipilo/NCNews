@@ -23,4 +23,5 @@ function getUserByUsername(req, res, next) {
       next(err);
     });
 }
+
 module.exports = { getAllUsers, getUserByUsername };
