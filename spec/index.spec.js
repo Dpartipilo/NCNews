@@ -13,7 +13,7 @@ describe('API', () => {
       .then(saveTestData)
       .then((data) => {
         usefulData = data;
-        // console.log(usefulData)
+        // console.log(usefulData);
       }).catch(err => console.log({ 'error': + err }));
   });
   after(() => {
@@ -146,7 +146,7 @@ describe('API', () => {
   /**************** COMMENTS ****************/
 
   // PUT increment votes by 1
-  describe('PUT /api/comments/:comment_id', () => {
+  describe('PUT /api/comments/:comment_id?vote=up', () => {
     it('Responds with COMMENT votes +1  with a status code of 202', () => {
       return request
         .put(`/api/comments/${usefulData.comments[0]._id}?vote=up`)
@@ -154,6 +154,20 @@ describe('API', () => {
         .then(res => {
           expect(res.body).to.be.an('object');
           expect(res.body.comment.votes).to.equal(1);
+          expect(res.body.comment.votes).to.be.a('number');
+        });
+    });
+  });
+
+  //PUT DECREMENTS the votes of an comment by 1
+  describe('PUT /api/comments/:comment_id?vote=down', () => {
+    it('Responds with COMMENT votes -1  with a status code of 202', () => {
+      return request
+        .put(`/api/comments/${usefulData.comments[0]._id}?vote=down`)
+        .expect(202)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.comment.votes).to.equal(-1);
           expect(res.body.comment.votes).to.be.a('number');
         });
     });
