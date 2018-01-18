@@ -12,4 +12,15 @@ function getAllUsers(req, res, next) {
       next(err);
     });
 }
-module.exports = { getAllUsers };
+
+function getUserByUsername(req, res, next) {
+  let username = req.params.username;
+  UserSchema.findOne({ username })
+    .then(user => {
+      res.send(user);
+    })
+    .catch(err => {
+      next(err);
+    });
+}
+module.exports = { getAllUsers, getUserByUsername };

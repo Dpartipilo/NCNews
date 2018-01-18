@@ -143,6 +143,21 @@ describe('API', () => {
     });
   });
 
+  //GET user by username
+  describe('GET /api/users/:username', () => {
+    it('Returns an object with the profile data for the specified user', () => {
+      return request
+        .get(`/api/users/${usefulData.user.username}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.username).to.be.a('string');
+          expect(res.body.username).to.equal('northcoder');
+          expect(res.body.name).to.equal('Awesome Northcoder');
+        });
+    });
+  });
+
   /**************** COMMENTS ****************/
 
   // PUT increment votes by 1
@@ -186,4 +201,3 @@ describe('API', () => {
     });
   });
 });
-
