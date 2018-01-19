@@ -1,7 +1,9 @@
+/*eslint-disable no-console*/
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 require('dotenv').config({
   path: `./.${process.env.NODE_ENV}.env`
 });
+
 const mongoose = require('mongoose');
 const models = require('../models/models');
 const userData = require('./data/user_data.js');
@@ -32,7 +34,7 @@ mongoose.connect(process.env.DB_URI, function (err) {
     ], function (err) {
       if (err) {
         logger.error('ERROR SEEDING :O');
-        console.log(JSON.stringify(err));// eslint-disable-line no-console
+        console.log(JSON.stringify(err));
         process.exit();
       }
       logger.info('DONE SEEDING!!');
@@ -40,7 +42,7 @@ mongoose.connect(process.env.DB_URI, function (err) {
     });
   } else {
     logger.error('DB ERROR');
-    console.log(JSON.stringify(err));// eslint-disable-line no-console
+    console.log(JSON.stringify(err));
     process.exit();
   }
 });

@@ -1,26 +1,23 @@
+/*eslint-disable no-console*/
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 require('dotenv').config({
   path: `./.${process.env.NODE_ENV}.env`
 });
 
-//## Server
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 process.env.NODE_ENV;
-//##Database
-
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-app.use(bodyParser.json());
-
-//##API-Route
 const apiRouter = require('../routes/api');
 
 mongoose.connect(process.env.DB_URI, { useMongoClient: true })
-  .then(() => console.log('successfully connected to the database'))// eslint-disable-line no-console
-  .catch(err => console.error('connection failed', err));// eslint-disable-line no-console
+  .then(() => console.log(`successfully connected to "${process.env.NODE_ENV}" database`))
+  .catch(err => console.error('connection failed', err));
+
+app.use(bodyParser.json());
 
 app.use('/api', apiRouter);
 
