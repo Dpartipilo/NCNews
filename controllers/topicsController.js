@@ -14,16 +14,14 @@ function getAllTopics(req, res, next) {
 }
 
 function getAllArticlesByTopic(req, res, next) {
-  let topic_id = req.params.topic_id;
-  TopicSchema.findById(topic_id)
-    .then(() => {
-      return ArticleSchema.find()
-        .then(articles => {
-          res.send(articles);
-        })
-        .catch(err => {
-          next(err);
-        });
+  const { topic_id } = req.params;
+  ArticleSchema.find({ from_topic: topic_id })
+    .then(articles => {
+      if (articles.length === 0) return next({ status: 404, message: 'This topic doesn\'t exist' });
+      res.status(200).send(articles);
+    })
+    .catch(err => {
+      if (err) next(err);
     });
 }
 
