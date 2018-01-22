@@ -14,17 +14,28 @@ function getAllArticles(req, res, next) {
     });
 }
 
-function getAllCommentsByArticle(req, res, next) {
-  let article_id = req.params.article_id;
+function getArticleById(req, res, next) {
+  const { article_id } = req.params;
   ArticleSchema.findById(article_id)
-    .then(() => {
-      return CommentSchema.find();
-    }).then(comments => {
+    .then(article => {
+      if (res.status === 404) return next({ status: 404, message: 'This article doesn\'t exist' });
+      res.status(200).send(article);
+    })
+    .catch(err => {
+      next(err);
+    });
+}
+
+function getAllCommentsByArticle(req, res, next) {
+  let { article_id } = req.params;
+  CommentSchema.find({ from_topic: article_id })
+    .then(comments => {
       if (comments.length === 0) return next({ type: 404 });
       res.send(comments);
     })
     .catch(err => {
-      next(err);
+      if (err.name === 'CastError') return next({ error: err });
+      else next(err);
     });
 }
 
@@ -63,4 +74,4 @@ function articleVote(req, res, next) {
     });
 }
 
-module.exports = { getAllArticles, getAllCommentsByArticle, addCommentsToArticle, articleVote };
+module.exports = { getAllArticles, getArticleById, getAllCommentsByArticle, addCommentsToArticle, articleVote };

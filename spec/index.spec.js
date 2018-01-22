@@ -48,9 +48,6 @@ describe('API', () => {
           expect(res.body[0].title).to.be.a('string');
         });
     });
-  });
-
-  describe('404 Topics Error handling', () => {
     it('Returns a 404 error if a topic that doesn\'t exist is given', () => {
       return request
         .get('/api/topics/test/articles')
@@ -73,6 +70,18 @@ describe('API', () => {
           expect(res.body).to.be.an('array');
           expect(res.body.length).to.equal(2);
           expect(res.body[0].title).to.be.a('string');
+        });
+    });
+  });
+
+  describe('GET /articles/article_id', () => {
+    it('Return an specific article by id with a status code of 200', () => {
+      return request
+        .get(`/api/articles/${usefulData.articles[0]._id}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.title).to.be.a('string');
         });
     });
   });
