@@ -8,7 +8,7 @@ const ArticleSchema = new Schema({
   },
   body: {
     type: String,
-    requied: true
+    required: true
   },
   from_topic: {
     type: String,
