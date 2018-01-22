@@ -40,12 +40,23 @@ describe('API', () => {
   describe('GET /api/topics/:topic_id/articles', () => {
     it('Returns all ARTICLES from a TOPIC with a status code of 200', () => {
       return request
-        .get(`/api/topics/${usefulData.topics[0]._id}/articles`)
+        .get(`/api/topics/${usefulData.topics[0].slug}/articles`)
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an('array');
-          expect(res.body.length).to.equal(2);
+          expect(res.body.length).to.equal(1);
           expect(res.body[0].title).to.be.a('string');
+        });
+    });
+  });
+
+  describe('404 Topics Error handling', () => {
+    it('Returns a 404 error if a topic that doesn\'t exist is given', () => {
+      return request
+        .get('/api/topics/test/articles')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal('This topic doesn\'t exist');
         });
     });
   });
@@ -200,4 +211,6 @@ describe('API', () => {
         });
     });
   });
+  /**************** ERROR ****************/
+
 });
