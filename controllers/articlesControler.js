@@ -26,7 +26,7 @@ function getArticleById(req, res, next) {
 }
 
 function getAllCommentsByArticle(req, res, next) {
-  let { article_id } = req.params;
+  const { article_id } = req.params;
   CommentSchema.find({ from_topic: article_id })
     .then(comments => {
       res.send(comments);
@@ -38,21 +38,24 @@ function getAllCommentsByArticle(req, res, next) {
 }
 
 function addCommentsToArticle(req, res, next) {
-  let article_id = req.params.article_id;
-  ArticleSchema.findById(article_id)
-    .then(() => {
-      return new CommentSchema({
-        created_by: req.body.created_by,
-        body: req.body.body,
-        from_topic: req.params.article_id
-      });
-    })
-    .then((comment) => {
-      comment.save();
+  const { article_id } = req.params;
+  const { created_by, body } = req.body;
+
+  const newComment = new CommentSchema({
+    created_by: created_by,
+    body: body,
+    from_topic: article_id,
+    created_at: Date.now()
+  });
+
+  if(/^\W*$/.test(newComment.body)) return next({status: 400, message: 'INVALID INPUT'});
+  newComment.save()
+    .then(comment => {
       res.status(201).send(comment);
     })
     .catch(err => {
-      next(err);
+      if (err.name === 'ValidationError') next({ status: 400, message: 'INVALID INPUT' });
+      return next(err);
     });
 }
 

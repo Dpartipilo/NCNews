@@ -106,7 +106,7 @@ describe('API', () => {
           expect(res.body[0].body).to.be.a('string');
         });
     });
-    it('Returns a status 404 error if an article id is not found', () => {
+    it('Returns a status 404 if an article id is not found', () => {
       return request
         .get('/api/aricles/errorTest/comments')
         .expect(404)
@@ -130,11 +130,21 @@ describe('API', () => {
         .then(res => {
           expect(res.body).to.be.an('object');
           expect(res.body.body).to.equal('test comment!');
-          expect(res.body.body).to.be.a('string');
+          expect(res.body.created_by).to.equal('northcoder');
+        });
+    });
+    it('Returns a 400 status code if posting an invalid comment', () => {
+      return request
+        .post(`/api/articles/${usefulData.articles[0]._id}/comments`)
+        .send({
+          body: '  '
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal('INVALID INPUT');
         });
     });
   });
-
   //PUT increment the votes of an article by 1
   describe('PUT /api/articles/:article_id?vote=up', () => {
     it('Responds with ARTICLE votes +1 with a status code of 202', () => {
