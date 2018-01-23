@@ -6,11 +6,10 @@ const { ArticleSchema, CommentSchema } = require('../models/models.js');
 function getAllArticles(req, res, next) {
   ArticleSchema.find()
     .then(articles => {
-      if (articles.length === 0) return next({ type: 404 });
       res.send(articles);
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 }
 
@@ -29,11 +28,11 @@ function getAllCommentsByArticle(req, res, next) {
   const { article_id } = req.params;
   CommentSchema.find({ from_topic: article_id })
     .then(comments => {
-      res.send(comments);
+      res.status(200).send(comments);
     })
     .catch(err => {
-      if (err.name === 'CastError') return next({ error: err });
-      else next(err);
+      if (err.name === 'CastError') return next({status: 404, message: 'ARTICLE_ID NOT FOUND'});
+      return next(err);
     });
 }
 
@@ -48,7 +47,7 @@ function addCommentsToArticle(req, res, next) {
     created_at: Date.now()
   });
 
-  if(/^\W*$/.test(newComment.body)) return next({status: 400, message: 'INVALID INPUT'});
+  if (/^\W*$/.test(newComment.body)) return next({ status: 400, message: 'INVALID INPUT' });
   newComment.save()
     .then(comment => {
       res.status(201).send(comment);
@@ -60,7 +59,7 @@ function addCommentsToArticle(req, res, next) {
 }
 
 function articleVote(req, res, next) {
-  let article_id = req.params.article_id;
+  let { article_id } = req.params;
   let vote = 0;
   if (req.query.vote.toLowerCase() === 'up') vote += 1;
   else if (req.query.vote.toLowerCase() === 'down') vote -= 1;
@@ -70,8 +69,8 @@ function articleVote(req, res, next) {
       res.status(202).send({ message: 'Article voted!', article });
     })
     .catch(err => {
-      if (err.name === 'CastError') return next({ error: err });
-      else next(err);
+      if (err.name === 'CastError') return next({ status: 404, message: 'ARTICLE_ID NOT FOUND' });
+      return next(err);
     });
 }
 

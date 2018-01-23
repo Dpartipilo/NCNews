@@ -161,9 +161,18 @@ describe('API', () => {
         .put(`/api/articles/${usefulData.articles[0]._id}?vote=up`)
         .expect(202)
         .then(res => {
+          const { votes } = res.body.article;
           expect(res.body).to.be.an('object');
-          expect(res.body.article.votes).to.equal(1);
-          expect(res.body.article.votes).to.be.a('number');
+          expect(votes).to.equal(1);
+          expect(votes).to.be.a('number');
+        });
+    });
+    it('Returns with a status code of 404 if the article_id is not found', () => {
+      return request
+        .put('/api/articles/test?vote=up')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
         });
     });
   });
@@ -175,9 +184,18 @@ describe('API', () => {
         .put(`/api/articles/${usefulData.articles[0]._id}?vote=down`)
         .expect(202)
         .then(res => {
+          const { votes } = res.body.article;
           expect(res.body).to.be.an('object');
-          expect(res.body.article.votes).to.equal(-1);
-          expect(res.body.article.votes).to.be.a('number');
+          expect(votes).to.equal(-1);
+          expect(votes).to.be.a('number');
+        });
+    });
+    it('Returns with a status code of 404 if the article_id is not found', () => {
+      return request
+        .put('/api/articles/test?vote=down')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
         });
     });
   });
