@@ -18,11 +18,10 @@ function getArticleById(req, res, next) {
   const { article_id } = req.params;
   ArticleSchema.findById(article_id)
     .then(article => {
-      if (res.status === 404) return next({ status: 404, message: 'This article doesn\'t exist' });
       res.status(200).send(article);
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 }
 

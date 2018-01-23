@@ -23,7 +23,7 @@ app.use(cors());
 app.use('/api', apiRouter);
 
 app.use('/*', (req, res) => {
-  res.status(404).send({ msg: 'Page not found' });
+  res.status(404).send({ message: 'Page not found' });
 });
 
 app.use((err, req, res, next) => {
