@@ -84,6 +84,14 @@ describe('API', () => {
           expect(res.body.title).to.be.a('string');
         });
     });
+    it('Returns a 404 error if an article id is not found', () => {
+      return request
+        .get('/api/aricles/errorTest')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.eql('Page not found');
+        });
+    });
   });
 
   //Get all comments from an article

@@ -18,7 +18,7 @@ function getArticleById(req, res, next) {
   const { article_id } = req.params;
   ArticleSchema.findById(article_id)
     .then(article => {
-      res.status(200).send(article);
+      res.send(article);
     })
     .catch(err => {
       return next(err);
