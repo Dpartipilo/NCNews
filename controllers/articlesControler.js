@@ -29,7 +29,6 @@ function getAllCommentsByArticle(req, res, next) {
   let { article_id } = req.params;
   CommentSchema.find({ from_topic: article_id })
     .then(comments => {
-      if (comments.length === 0) return next({ type: 404 });
       res.send(comments);
     })
     .catch(err => {
