@@ -72,7 +72,7 @@ describe('GET requests', () => {
   });
 
   //Get an article by Id
-  describe.only('GET /articles/article_id', () => {
+  describe('GET /articles/article_id', () => {
     it('Return an specific article by id with a status code of 200', () => {
       return request
         .get(`/api/articles/${usefulData.articles[0]._id}`)
@@ -84,16 +84,16 @@ describe('GET requests', () => {
     });
     it('Returns a 404 status if an article is not found', () => {
       return request
-        .get('/api/aricles/5a622537ab7deb0bd909beb5')
+        .get('/api/articles/5a622537ab7deb0bd909beb5')
         .expect(404)
         .then(res => {
-          expect(res.body.message).to.eql('Page not found');
+          expect(res.body.message).to.eql('ARTICLE_ID NOT FOUND');
         });
     });
-    it('Returns a 400 status if an article id is not found', () => {
+    it('Returns a 400 status "Bad request" if an article id is not valid', () => {
       return request
-        .get('/api/aricles/wrongIdTest')
-        .expect(400)
+        .get('/api/articles/wrongIdTest')
+        .expect(400);
     });
   });
 
@@ -111,10 +111,10 @@ describe('GET requests', () => {
     });
     it('Returns a status 404 if an article id is not found', () => {
       return request
-        .get('/api/aricles/errorTest/comments')
+        .get('/api/articles/errorTest/comments')
         .expect(404)
         .then(res => {
-          expect(res.body.message).to.eql('Page not found');
+          expect(res.body.message).to.eql('ARTICLE_ID NOT FOUND');
         });
     });
   });
