@@ -45,12 +45,12 @@ describe('GET requests', () => {
           expect(res.body[0].title).to.be.a('string');
         });
     });
-    it('Returns a 404 error if a topic that doesn\'t exist is given', () => {
+    it('Returns a 404 status code if a topic id that doesn\'t exist is given', () => {
       return request
-        .get('/api/topics/test/articles')
+        .get('/api/topics/coding/articles')
         .expect(404)
         .then(res => {
-          expect(res.body.message).to.equal('This topic doesn\'t exist');
+          expect(res.body.message).to.equal('TOPIC NOT FOUND');
         });
     });
   });
