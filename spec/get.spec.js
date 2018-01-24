@@ -153,5 +153,13 @@ describe('GET requests', () => {
           expect(res.body.name).to.equal('Awesome Northcoder');
         });
     });
+    it('Returns a 404 status code if the user doesn\'t exist', () => {
+      return request
+        .get('/api/users/Diego')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal('USERNAME NOT FOUND');
+        });
+    });
   });
 });

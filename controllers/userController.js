@@ -6,21 +6,22 @@ const { UserSchema } = require('../models/models.js');
 function getAllUsers(req, res, next) {
   UserSchema.find()
     .then(users => {
-      res.send(users);
+      res.status(200).send(users);
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 }
 
 function getUserByUsername(req, res, next) {
-  let username = req.params.username;
+  let { username } = req.params;
   UserSchema.findOne({ username })
     .then(user => {
-      res.send(user);
+      if (user === null) return next({ status: 404, message: 'USERNAME NOT FOUND' });
+      res.status(200).send(user);
     })
     .catch(err => {
-      next(err);
+      return next(err);
     });
 }
 
