@@ -23,14 +23,19 @@ function commentVote(req, res, next) {
 }
 
 function commentDelete(req, res, next) {
-  const comment_id = req.params.comment_id;
+  const { comment_id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(comment_id)) {
+    return next({ status: 400, message: `Invalid comment_id: ${comment_id}` });
+  }
   CommentSchema.findByIdAndRemove(comment_id)
-    .then(() => {
+    .then(comment => {
       let response = {
-        message: `Comment ${comment_id} successfully deleted`
+        message: `Comment: ${comment_id} successfully deleted`
       };
-      res.status(202).send(response);
+      if (!comment) return next({ status: 404, message: 'COMMENT_ID NOT FOUND' });
+      res.status(204).send(response);
     })
+
     .catch(err => {
       if (err.name === 'CastError') return next({ status: 404, message: 'COMMENT_ID NOT FOUND' });
       return next(err);
