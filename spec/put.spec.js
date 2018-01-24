@@ -13,7 +13,6 @@ describe('PUT requests', () => {
       .then(saveTestData)
       .then((data) => {
         usefulData = data;
-        // console.log(usefulData);
       }).catch(err => console.log({ 'error': + err }));// eslint-disable-line no-console
   });
   after(() => {
