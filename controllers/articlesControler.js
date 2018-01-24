@@ -14,11 +14,10 @@ function getAllArticles(req, res, next) {
 
 function getArticleById(req, res, next) {
   const { article_id } = req.params;
-  
+
   if (!mongoose.Types.ObjectId.isValid(article_id)) {
     return next({ status: 400, message: `Invalid article_id: ${article_id}` });
   }
-
   ArticleSchema.findById(article_id)
     .then(article => {
       if (article === null) return next({ status: 404, message: 'ARTICLE_ID NOT FOUND' });
@@ -31,8 +30,12 @@ function getArticleById(req, res, next) {
 
 function getAllCommentsByArticle(req, res, next) {
   const { article_id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(article_id)) {
+    return next({ status: 400, message: `Invalid article_id: ${article_id}` });
+  }
   CommentSchema.find({ from_topic: article_id })
     .then(comments => {
+      if (comments.length === 0) return next({ status: 404, message: 'ARTICLE_ID NOT FOUND' });
       res.status(200).send(comments);
     })
     .catch(err => {

@@ -111,11 +111,16 @@ describe('GET requests', () => {
     });
     it('Returns a status 404 if an article id is not found', () => {
       return request
-        .get('/api/articles/errorTest/comments')
+        .get('/api/articles/5a622537ab7deb0bd909beb5/comments')
         .expect(404)
         .then(res => {
           expect(res.body.message).to.eql('ARTICLE_ID NOT FOUND');
         });
+    });
+    it('Returns a 400 status "Bad request" if an article id is not valid', () => {
+      return request
+        .get('/api/articles/wrongIdTest')
+        .expect(400);
     });
   });
 

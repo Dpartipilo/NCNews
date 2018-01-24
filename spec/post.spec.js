@@ -47,7 +47,7 @@ describe('POST requests', () => {
           expect(res.body.message).to.equal('INVALID INPUT');
         });
     });
-    it('Returns a 400 status code if posting with no comment', () => {
+    it('Returns a 400 status code if posting an empty comment', () => {
       return request
         .post(`/api/articles/${usefulData.articles[0]._id}/comments`)
         .send({})
