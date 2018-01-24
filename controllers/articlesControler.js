@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.Promise = Promise;
 
 const { ArticleSchema, CommentSchema } = require('../models/models.js');
 
@@ -15,8 +14,12 @@ function getAllArticles(req, res, next) {
 
 function getArticleById(req, res, next) {
   const { article_id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(article_id)) {
+    return next({ status: 400, message: `Invalid article_id: ${article_id}` });
+  }
   ArticleSchema.findById(article_id)
     .then(article => {
+      if (article === null) return next({ status: 404, message: 'ARTICLE_ID NOT FOUND' });
       res.send(article);
     })
     .catch(err => {
@@ -31,7 +34,7 @@ function getAllCommentsByArticle(req, res, next) {
       res.status(200).send(comments);
     })
     .catch(err => {
-      if (err.name === 'CastError') return next({status: 404, message: 'ARTICLE_ID NOT FOUND'});
+      if (err.name === 'CastError') return next({ status: 404, message: 'ARTICLE_ID NOT FOUND' });
       return next(err);
     });
 }
@@ -60,11 +63,18 @@ function addCommentsToArticle(req, res, next) {
 
 function articleVote(req, res, next) {
   let { article_id } = req.params;
-  let vote = 0;
-  if (req.query.vote.toLowerCase() === 'up') vote += 1;
-  else if (req.query.vote.toLowerCase() === 'down') vote -= 1;
+  const vote = req.query.vote.toLowerCase();
 
-  ArticleSchema.findByIdAndUpdate(article_id, { $inc: { votes: vote } }, { new: true })
+  console.log(vote);
+  if (vote !== 'up' || vote !== 'down') {
+    return next({ status: 400, message: 'Bad request' });
+  }
+
+  ArticleSchema.findByIdAndUpdate(article_id, {
+    $inc: {
+      votes: vote === 'up' ? 1 : -1
+    }
+  }, { new: true })
     .then(article => {
       res.status(202).send({ message: 'Article voted!', article });
     })
