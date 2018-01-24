@@ -8,7 +8,7 @@ const saveTestData = require('../seed/test.seed.js');
 
 describe('DELETE request', () => {
   let usefulData;
-  before(() => {
+  beforeEach(() => {
     return mongoose.connection.dropDatabase()
       .then(saveTestData)
       .then((data) => {

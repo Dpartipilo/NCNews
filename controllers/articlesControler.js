@@ -47,14 +47,12 @@ function getAllCommentsByArticle(req, res, next) {
 function addCommentsToArticle(req, res, next) {
   const { article_id } = req.params;
   const { created_by, body } = req.body;
-
   const newComment = new CommentSchema({
     created_by: created_by,
     body: body,
     from_topic: article_id,
     created_at: Date.now()
   });
-
   if (/^\W*$/.test(newComment.body)) return next({ status: 400, message: 'INVALID INPUT' });
   newComment.save()
     .then(comment => {
@@ -67,17 +65,13 @@ function addCommentsToArticle(req, res, next) {
 }
 
 function articleVote(req, res, next) {
-  let { article_id } = req.params;
+  const { article_id } = req.params;
   const vote = req.query.vote.toLowerCase();
-
   if (vote !== 'up' && vote !== 'down') {
     return next({ status: 400, message: 'Bad request' });
   }
-
   ArticleSchema.findByIdAndUpdate(article_id, {
-    $inc: {
-      votes: vote === 'up' ? 1 : -1
-    }
+    $inc: { votes: vote === 'up' ? 1 : -1 }
   }, { new: true })
     .then(article => {
       res.status(202).send({ message: 'Article voted!', article });

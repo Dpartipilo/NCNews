@@ -65,7 +65,7 @@ describe('PUT requests', () => {
     });
     it('Returns with a status code of 404 if the article_id is not found', () => {
       return request
-        .put('/api/articles/test?vote=down')
+        .put('/api/articles/wrongId?vote=down')
         .expect(404)
         .then(res => {
           expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
@@ -91,6 +91,19 @@ describe('PUT requests', () => {
           expect(res.body.comment.votes).to.equal(1);
           expect(res.body.comment.votes).to.be.a('number');
         });
+    });
+    it('Returns with a status code of 404 if the comment_id is not found', () => {
+      return request
+        .put('/api/comments/wrongId?vote=up')
+        .expect(404)
+        .then(res => {
+          expect(res.body.message).to.equal('COMMENT_ID NOT FOUND');
+        });
+    });
+    it('Returns with a status code of 400 for a non valid vote', () => {
+      return request
+        .put(`/api/comments/${usefulData.comments[0]._id}?vote=wrongQuery`)
+        .expect(400);
     });
   });
 
