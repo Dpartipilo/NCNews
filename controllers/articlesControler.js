@@ -65,8 +65,7 @@ function articleVote(req, res, next) {
   let { article_id } = req.params;
   const vote = req.query.vote.toLowerCase();
 
-  console.log(vote);
-  if (vote !== 'up' || vote !== 'down') {
+  if (vote !== 'up' && vote !== 'down') {
     return next({ status: 400, message: 'Bad request' });
   }
 

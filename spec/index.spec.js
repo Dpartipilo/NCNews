@@ -169,11 +169,16 @@ describe('API', () => {
     });
     it('Returns with a status code of 404 if the article_id is not found', () => {
       return request
-        .put('/api/articles/test?vote=up')
+        .put('/api/articles/wrongId?vote=up')
         .expect(404)
         .then(res => {
           expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
         });
+    });
+    it('Returns with a status code of 400 for a non valid vote', () => {
+      return request
+        .put(`/api/articles/${usefulData.articles[0]._id}?vote=wrongQuery`)
+        .expect(400);
     });
   });
 
@@ -197,6 +202,11 @@ describe('API', () => {
         .then(res => {
           expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
         });
+    });
+    it('Returns with a status code of 400 for a non valid vote', () => {
+      return request
+        .put(`/api/articles/${usefulData.articles[0]._id}?vote=wrongQuery`)
+        .expect(400);
     });
   });
 
