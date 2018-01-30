@@ -12,7 +12,7 @@ function commentVote(req, res, next) {
   CommentSchema.findByIdAndUpdate(comment_id, {
     $inc: { votes: vote === 'up' ? 1 : -1 }
   },
-    { new: true })
+  { new: true })
     .then(comment => {
       res.status(202).send({ message: 'Comment voted!', comment });
     })

@@ -9,11 +9,13 @@ const saveTestData = require('../seed/test.seed.js');
 describe('PUT requests', () => {
   let usefulData;
   beforeEach(() => {
-    return mongoose.connection.dropDatabase()
+    return mongoose.connection
+      .dropDatabase()
       .then(saveTestData)
-      .then((data) => {
+      .then(data => {
         usefulData = data;
-      }).catch(err => console.log({ 'error': + err }));// eslint-disable-line no-console
+      })
+      .catch(err => console.log({ error: +err })); // eslint-disable-line no-console
   });
   after(() => {
     mongoose.disconnect();
@@ -36,7 +38,7 @@ describe('PUT requests', () => {
     });
     it('Returns with a status code of 404 if the article_id is not found', () => {
       return request
-        .put('/api/articles/wrongId?vote=up')
+        .put('/api/articles/5a622537ab7deb0bd909beb0?vote=up')
         .expect(404)
         .then(res => {
           expect(res.body.message).to.equal('ARTICLE_ID NOT FOUND');
