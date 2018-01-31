@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { UserSchema } = require('../models/models.js');
+const { UserSchema } = require("../models/models.js");
 
 function getAllUsers(req, res, next) {
   UserSchema.find()
@@ -17,7 +17,8 @@ function getUserByUsername(req, res, next) {
   let { username } = req.params;
   UserSchema.findOne({ username })
     .then(user => {
-      if (user === null) return next({ status: 404, message: 'USERNAME NOT FOUND' });
+      if (user === null)
+        return next({ status: 404, message: "USERNAME NOT FOUND" });
       res.status(200).send(user);
     })
     .catch(err => {
