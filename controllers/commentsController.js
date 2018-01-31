@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { CommentSchema } = require("../models/models.js");
+const { CommentSchema } = require("../models");
 
 function commentVote(req, res, next) {
   const { comment_id } = req.params;

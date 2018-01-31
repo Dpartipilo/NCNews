@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { TopicSchema, ArticleSchema } = require("../models/models.js");
+const { TopicSchema, ArticleSchema } = require("../models");
 
 function getAllTopics(req, res, next) {
   TopicSchema.find({})

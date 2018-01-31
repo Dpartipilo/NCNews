@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { UserSchema } = require("../models/models.js");
+const { UserSchema } = require("../models");
 
 function getAllUsers(req, res, next) {
   UserSchema.find()

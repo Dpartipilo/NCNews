@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { ArticleSchema, CommentSchema } = require("../models/models.js");
+const { ArticleSchema, CommentSchema } = require("../models");
 
 function getAllArticles(req, res, next) {
   ArticleSchema.find()
