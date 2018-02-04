@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha ./spec && npm run lint",
     "lint": "eslint --fix ./",
-    "start": "NODE_ENV=production node ./index.js",
+    "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=dev nodemon index.js",
     "seed:dev": "NODE_ENV=dev node ./seed/seed.js"
   },
