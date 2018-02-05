@@ -22,6 +22,15 @@ mongoose
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.status(200).send({
+    status: "OK",
+    api: "Check /api for end-points"
+  });
+});
+
+app.use("/api", express.static("public"));
 app.use("/api", apiRouter);
 app.use("/*", (req, res) => {
   res.status(404).send({ message: "Page not found" });

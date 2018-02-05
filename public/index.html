@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NCnews API</title>
+</head>
+
+<body>
+  <h1>Welcome to North Coders News API</h1>
+  <h3>A simple
+    <a target="_blank" href='https://www.reddit.com/'>reddit</a> clone</h3>
+
+  <h2>The Back-End source code of the project can be found
+    <a href='https://github.com/Dpartipilo/NCNews'>here</a>
+  </h2>
+
+  <h1>Routes</h1>
+  <ul>
+    <li>GET
+      <a href='http://localhost:3050/api/topics'>
+        <code>/api/topics</code>
+        <a>
+    </li>
+    <li>Get all the topics</li>
+  </ul>
+  <ul>
+    <li>GET
+      <a href='http://localhost:3050/api/topics/football/articles'>
+        <code>/api/topics/:topic_id/articles</code></code>
+      </a>
+    </li>
+    <li>Return all the articles for a certain topic</li>
+  </ul>
+  <ul>
+    <li> GET
+      <a href='http://localhost:3050/api/articles'>
+        <code>/api/articles</code>
+      </a>
+    </li>
+    <li>Returns all the articles</li>
+  </ul>
+  <ul>
+    <li>GET
+      <a href='http://localhost:3050/api/articles/5a783accc878c6228f4d3214/comments'>
+        <code>/api/articles/:article_id/comments</code>
+      </a>
+    </li>
+    <li>Get all the comments for a individual article</li>
+  </ul>
+  <ul>
+    <li>POST
+      <a href='http://localhost:3050/api/articles/5a783accc878c6228f4d3214/comments'>
+        <code>/api/articles/:article_id/comments</code>
+      </a>
+    </li>
+    <li>Add a new comment to an article.</li>
+    <li>This route requires a JSON body with a comment key and value pair e.g: {"comment": "This is my new comment"}</li>
+  </ul>
+  <ul>
+    <li>PUT
+      <a href='http://localhost:3050/api/articles/5a783accc878c6228f4d3214?vote=up'>
+        <code>/api/articles/:article_id?vote=up</code>
+      </a>
+    </li>
+    <li>Increment the votes of an article by one.</li>
+    <li>This route requires a vote query of 'up' e.g: /api/articles/:article_id?vote=up</li>
+  </ul>
+  <ul>
+    <li>PUT
+      <a href='http://localhost:3050/api/articles/5a783accc878c6228f4d3214?vote=down'></a>
+      <code>/api/articles/:article_id?vote=down</code>
+      </a>
+    </li>
+    <li>Decrement the votes of an article by one.</li>
+    <li>This route requires a vote query of 'down' e.g: /api/articles/:article_id?vote=down</li>
+  </ul>
+  <ul>
+    <li>PUT
+      <a href='http://localhost:3050//api/comments/:comment_id'></a>
+      <code>/api/comments/:comment_id</code>
+      </a>
+    </li>
+    <li>Increment or Decrement the votes of a comment by one.</li>
+    <li>This route requires a vote query of 'up' or 'down' e.g: /api/comments/:comment_id?vote=down</li>
+  </ul>
+  <ul>
+    <li>DELETE
+      <a href='http://localhost:3050/api/comments/:comment_id'>
+        <code>/api/comments/:comment_id</code> </a>
+    </li>
+    <li>Deletes a comment. If returns "page not found", someone else deleted the comment. :) </li>
+  </ul>
+  <ul>
+    <li>GET
+      <a href='http://localhost:3050/api/users/northcoder'>
+        <code>/api/users/:username</code>
+      </a>
+    </li>
+    <li>Returns a JSON object with the profile data for the specified user. e.g: northcoder</li>
+  </ul>
+  <ul>
+    <li>GET
+      <a href='http://localhost:3050/api/users'>
+        <code>/api/users</code>></a>
+    </li>
+    <li>Returns a JSON object with all users.</li>
+  </ul>
+</body>
+
+</html>
