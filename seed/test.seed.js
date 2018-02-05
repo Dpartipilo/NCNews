@@ -1,14 +1,9 @@
-const {
-  ArticleSchema,
-  UserSchema,
-  TopicSchema,
-  CommentSchema
-} = require("../models");
+const { Article, User, Topic, Comment } = require("../models");
 
 const savedData = {};
 
 function saveUser() {
-  const user = new UserSchema({
+  const user = new User({
     username: "northcoder",
     name: "Awesome Northcoder",
     avatar_url: "https://avatars3.githubusercontent.com/u/6791502?v=3&s=200"
@@ -21,7 +16,7 @@ function saveTopics() {
     { title: "Football", slug: "football" },
     { title: "Cooking", slug: "cooking" },
     { title: "Cats", slug: "cats" }
-  ].map(t => new TopicSchema(t).save());
+  ].map(t => new Topic(t).save());
   return Promise.all(topics);
 }
 
@@ -29,7 +24,7 @@ function saveArticles() {
   const articles = [
     { title: "Cats are great", body: "something", from_topic: "cats" },
     { title: "Football is fun", body: "something", from_topic: "football" }
-  ].map(a => new ArticleSchema(a).save());
+  ].map(a => new Article(a).save());
   return Promise.all(articles);
 }
 
@@ -45,7 +40,7 @@ function saveComments(articles) {
       from_topic: articles[0]._id,
       created_by: "northcoder"
     }
-  ].map(c => new CommentSchema(c).save());
+  ].map(c => new Comment(c).save());
   return Promise.all(comments);
 }
 

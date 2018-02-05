@@ -1,6 +1,6 @@
 module.exports = {
-  UserSchema: require("./users"),
-  ArticleSchema: require("./articles"),
-  CommentSchema: require("./comments"),
-  TopicSchema: require("./topics")
+  User: require("./users"),
+  Article: require("./articles"),
+  Comment: require("./comments"),
+  Topic: require("./topics")
 };

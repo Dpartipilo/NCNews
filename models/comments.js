@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema({
+const Comment = new Schema({
   body: {
     type: String,
     required: true
@@ -21,8 +21,8 @@ const CommentSchema = new Schema({
   created_by: {
     type: String,
     required: true,
-    default: 'northcoder'
+    default: "northcoder"
   }
 });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model("Comment", Comment);

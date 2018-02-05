@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
-const { ArticleSchema, CommentSchema } = require("../models");
+const { Article, Comment } = require("../models");
 
 function getAllArticles(req, res, next) {
-  ArticleSchema.find()
+  Article.find()
     .then(articles => {
+      if (articles.length === 0)
+        return next({ status: 404, message: "PAGE NOT FOUND" });
       res.send(articles);
     })
     .catch(err => {
@@ -18,7 +20,7 @@ function getArticleById(req, res, next) {
   if (!mongoose.Types.ObjectId.isValid(article_id)) {
     return next({ status: 400, message: `Invalid article_id: ${article_id}` });
   }
-  ArticleSchema.findById(article_id)
+  Article.findById(article_id)
     .then(article => {
       if (article === null)
         return next({ status: 404, message: "ARTICLE_ID NOT FOUND" });
@@ -34,7 +36,7 @@ function getAllCommentsByArticle(req, res, next) {
   if (!mongoose.Types.ObjectId.isValid(article_id)) {
     return next({ status: 400, message: `Invalid article_id: ${article_id}` });
   }
-  CommentSchema.find({ from_topic: article_id })
+  Comment.find({ from_topic: article_id })
     .then(comments => {
       if (comments.length === 0)
         return next({ status: 404, message: "ARTICLE_ID NOT FOUND" });
@@ -50,7 +52,7 @@ function getAllCommentsByArticle(req, res, next) {
 function addCommentsToArticle(req, res, next) {
   const { article_id } = req.params;
   const { created_by, body } = req.body;
-  const newComment = new CommentSchema({
+  const newComment = new Comment({
     created_by: created_by,
     body: body,
     from_topic: article_id,
@@ -76,7 +78,7 @@ function articleVote(req, res, next) {
   if (vote !== "up" && vote !== "down") {
     return next({ status: 400, message: "Bad request" });
   }
-  ArticleSchema.findByIdAndUpdate(
+  Article.findByIdAndUpdate(
     article_id,
     {
       $inc: { votes: vote === "up" ? 1 : -1 }

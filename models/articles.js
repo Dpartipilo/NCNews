@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ArticleSchema = new Schema({
+const Article = new Schema({
   title: {
     type: String,
     required: true
@@ -11,7 +11,7 @@ const ArticleSchema = new Schema({
     required: true
   },
   from_topic: {
-    type: String,
+    type: String
   },
   votes: {
     type: Number,
@@ -23,4 +23,4 @@ const ArticleSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Article', ArticleSchema);
+module.exports = mongoose.model("Article", Article);

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { TopicSchema, ArticleSchema } = require("../models");
+const { Topic, Article } = require("../models");
 
 function getAllTopics(req, res, next) {
-  TopicSchema.find({})
+  Topic.find({})
     .then(topics => {
       res.status(200).send(topics);
     })
@@ -15,7 +15,7 @@ function getAllTopics(req, res, next) {
 
 function getAllArticlesByTopic(req, res, next) {
   const { topic_id } = req.params;
-  ArticleSchema.find({ from_topic: topic_id })
+  Article.find({ from_topic: topic_id })
     .then(articles => {
       if (articles.length === 0)
         return next({ status: 404, message: "TOPIC NOT FOUND" });

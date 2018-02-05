@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
-const { CommentSchema } = require("../models");
+const { Comment } = require("../models");
 
 function commentVote(req, res, next) {
   const { comment_id } = req.params;
@@ -9,7 +9,7 @@ function commentVote(req, res, next) {
   if (vote !== "up" && vote !== "down") {
     return next({ status: 400, message: "Bad request" });
   }
-  CommentSchema.findByIdAndUpdate(
+  Comment.findByIdAndUpdate(
     comment_id,
     {
       $inc: { votes: vote === "up" ? 1 : -1 }
@@ -31,7 +31,7 @@ function commentDelete(req, res, next) {
   if (!mongoose.Types.ObjectId.isValid(comment_id)) {
     return next({ status: 400, message: `Invalid comment_id: ${comment_id}` });
   }
-  CommentSchema.findByIdAndRemove(comment_id)
+  Comment.findByIdAndRemove(comment_id)
     .then(comment => {
       let response = {
         message: `Comment: ${comment_id} successfully deleted`

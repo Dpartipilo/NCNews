@@ -4,12 +4,7 @@ require("dotenv").config({
   path: `./.${process.env.NODE_ENV}.env`
 });
 
-const {
-  ArticleSchema,
-  UserSchema,
-  TopicSchema,
-  CommentSchema
-} = require("../models");
+const { Article, User, Topic, Comment } = require("../models");
 
 const mongoose = require("mongoose");
 const userData = require("./data/user_data.js");
@@ -48,7 +43,7 @@ mongoose.connect(process.env.DB_URI, function(err) {
 });
 
 function addNorthcoderUser(done) {
-  var userDoc = new UserSchema({
+  var userDoc = new User({
     username: "northcoder",
     name: "Awesome Northcoder",
     avatar_url: "https://avatars3.githubusercontent.com/u/6791502?v=3&s=200"
@@ -66,7 +61,7 @@ function addUsers(done) {
   async.eachSeries(
     userData,
     function(user, cb) {
-      var userDoc = new UserSchema(user);
+      var userDoc = new User(user);
       userDoc.save(function(err) {
         if (err) {
           return cb(err);
@@ -91,7 +86,7 @@ function addTopics(done) {
         title: topic,
         slug: topic.toLowerCase()
       };
-      var topicDoc = new TopicSchema(topicObj);
+      var topicDoc = new Topic(topicObj);
       topicDoc.save(function(err, doc) {
         if (err) {
           logger.error(JSON.stringify(err));
@@ -124,7 +119,7 @@ function addArticles(topicDocs, done) {
           usersArticle.created_by = user.username;
           usersArticle.from_topic = topic.slug;
           usersArticle.votes = _.sample(_.range(2, 11));
-          var usersArticleDoc = new ArticleSchema(usersArticle);
+          var usersArticleDoc = new Article(usersArticle);
           usersArticleDoc.save(function(err, doc) {
             if (err) {
               logger.error(JSON.stringify(err));
@@ -136,7 +131,7 @@ function addArticles(topicDocs, done) {
             usersArticleTwo.created_by = user.username;
             usersArticleTwo.from_topic = topic.slug;
             usersArticleTwo.votes = _.sample(_.range(2, 11));
-            var usersArticleTwoDoc = new ArticleSchema(usersArticleTwo);
+            var usersArticleTwoDoc = new Article(usersArticleTwo);
             usersArticleTwoDoc.save(function(err, doc2) {
               if (err) {
                 logger.error(JSON.stringify(err));
@@ -176,7 +171,7 @@ function addComments(docIds, done) {
             votes: _.sample(_.range(2, 11)),
             created_at: getRandomStamp()
           };
-          var commentDoc = new CommentSchema(comment);
+          var commentDoc = new Comment(comment);
           commentDoc.save(function(err) {
             if (err) {
               return cb(err);
