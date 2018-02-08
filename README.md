@@ -5,6 +5,8 @@ To access this project hosted by heroku click on the following link:
 
 * [NCNews](https://glacial-brushlands-79472.herokuapp.com/api)
 
+If you’d prefer to run locally you can follow the instructions below.
+
 ## Getting Started
 
 1. In order to run this code you need to install nodeJS. To check if you have nodeJS installed open you terminal window and run/paste the following command:
@@ -60,7 +62,15 @@ git clone https://github.com/Dpartipilo/NCNews.git
 npm install
 ```
 
-3. Before running the tests make sure you have mongo running in the console, usually with the command: `mongod`, then to run the tests use the following command:
+3. Is usually a good idea to run the database in a separate console window/tab, now on your new console run the following command:
+
+```
+mongod
+```
+
+Wait a couple of seconds until is ready to accept requests.
+
+4. Once `mongod` is successfully running you are ready to run the tests. To run the tests use the following command:
 
 ```
 npm test
